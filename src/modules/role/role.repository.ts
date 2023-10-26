@@ -16,6 +16,8 @@ export class RoleRepository {
   async createRole(data: IRoles) {
     const newRole = this.roleRepository.create(data);
     await this.roleRepository.save(newRole);
+    console.log('hihihii');
+
     return newRole;
   }
   async findAll(): Promise<IRoles[]> {
