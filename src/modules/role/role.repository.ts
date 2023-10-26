@@ -17,6 +17,7 @@ export class RoleRepository {
     const newRole = this.roleRepository.create(data);
     await this.roleRepository.save(newRole);
     console.log('hihihii');
+    console.log('asdasdasddasdassdd');
 
     return newRole;
   }
