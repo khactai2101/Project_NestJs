@@ -1,10 +1,7 @@
-// import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
-import { UserEntity } from 'src/modules/users/entitites/user.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('Role')
-export class RoleEntity {
+export class Role {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -16,7 +13,6 @@ export class RoleEntity {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updateAt: Date;
-
-  @OneToMany(() => UserEntity, (user) => user.role)
-  item: UserEntity[];
+  // @OneToMany(() => User, (user) => user.role)
+  // users: User[];
 }

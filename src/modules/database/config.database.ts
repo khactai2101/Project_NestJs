@@ -3,7 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { Connection } from 'typeorm';
 import { RoleModule } from '../role/role.module';
-import { Role } from '../role/entities/role.entity';
+// import { SnakeNamingStrategy } from 'typeorm-snake-naming-strategy';
+// import { User } from '../users/entitites/user.entity';
 dotenv.config();
 
 @Module({
@@ -15,8 +16,10 @@ dotenv.config();
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_DATABASE,
-      entities: [Role],
-      // synchronize: true,
+      // entities: [Role],
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      synchronize: true,
+      // namingStrategy: new SnakeNamingStrategy(),
     }),
     RoleModule,
   ],
