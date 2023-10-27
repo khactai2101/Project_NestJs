@@ -1,4 +1,3 @@
-import { Role } from 'src/modules/role/entities/Role';
 import { RoleEntity } from 'src/modules/role/entities/role.entity';
 import {
   Column,

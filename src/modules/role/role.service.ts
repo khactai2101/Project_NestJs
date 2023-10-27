@@ -1,6 +1,6 @@
 import { Body, Injectable, Param } from '@nestjs/common';
 import { IRoles } from './interface/role.interface';
-import { Role } from './entities/Role';
+import { RoleEntity } from './entities/role.entity';
 import { RoleRepository } from './role.repository';
 import { RoleDto } from './dto/role.dto';
 import { DeleteResult } from 'typeorm';
@@ -9,7 +9,7 @@ import { GlobalInterface } from 'src/shared/interfaces/global.interface';
 @Injectable()
 export class RoleService {
   constructor(private roleRepository: RoleRepository) {}
-  async createRole(data: RoleDto): Promise<Role> {
+  async createRole(data: RoleDto): Promise<RoleEntity> {
     const newRole = await this.roleRepository.createRole(data);
     return newRole;
   }
@@ -23,7 +23,7 @@ export class RoleService {
     }
     return role;
   }
-  async updateRole(id: number, data: RoleDto): Promise<any> {
+  async updateRole(id: number, data: RoleDto): Promise<IRoles> {
     return await this.roleRepository.updateRole(id, data);
   }
   async deleteRole(id: number): Promise<GlobalInterface> {

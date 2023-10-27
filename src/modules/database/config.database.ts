@@ -3,8 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { Connection } from 'typeorm';
 import { RoleModule } from '../role/role.module';
-// import { SnakeNamingStrategy } from 'typeorm-snake-naming-strategy';
-// import { User } from '../users/entitites/user.entity';
 dotenv.config();
 
 @Module({
@@ -19,7 +17,6 @@ dotenv.config();
       // entities: [Role],
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
-      // namingStrategy: new SnakeNamingStrategy(),
     }),
     RoleModule,
   ],

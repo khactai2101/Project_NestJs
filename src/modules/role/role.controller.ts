@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { IRoles } from './interface/role.interface';
 import { RoleService } from './role.service';
-import { Role } from './entities/Role';
 import { RoleDto } from './dto/role.dto';
 import { DeleteResult } from 'typeorm';
 import { GlobalInterface } from 'src/shared/interfaces/global.interface';
@@ -40,7 +39,7 @@ export class RoleController {
   async updateRole(
     @Param('id') id: number,
     @Body() roleData: RoleDto,
-  ): Promise<Role | String> {
+  ): Promise<IRoles> {
     return await this.roleService.updateRole(id, roleData);
   }
   @Delete('/:id')
