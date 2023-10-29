@@ -24,7 +24,7 @@ export class UserEntity {
   @Column()
   avatar: string;
 
-  @Column()
+  @Column({ default: 1 })
   status: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
