@@ -1,31 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role } from './entities/role.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { IRoles } from './interface/role.interface';
+import { RoleDto } from './dto/role.dto';
+import { RoleEntity } from './entities/role.entity';
 
 @Injectable()
 export class RoleRepository {
-  create(data: IRoles) {
-    throw new Error('Method not implemented.');
-  }
   constructor(
-    @InjectRepository(Role) private roleRepository: Repository<Role>,
+    @InjectRepository(RoleEntity)
+    private roleRepository: Repository<RoleEntity>,
   ) {}
 
-  async createRole(data: IRoles) {
+  async createRole(data: RoleDto) {
     const newRole = this.roleRepository.create(data);
     await this.roleRepository.save(newRole);
-    console.log('hihihii');
-    console.log('asdasdasddasdassdd');
-
     return newRole;
   }
-  async findAll(): Promise<IRoles[]> {
+  async findAllRole(): Promise<IRoles[]> {
     return this.roleRepository.find();
   }
-  // async findOnly(id: number): Promise<IRoles | string> {
-  //   const role = await this.roleRepository.findOne({ where: { id: id } });
-  //   return role;
-  // }
+  async findOnlyRole(id: number): Promise<IRoles> {
+    const role = await this.roleRepository.findOne({ where: { id: id } });
+    return role;
+  }
+
+  async updateRole(id: number, data: RoleDto): Promise<IRoles | any> {
+    const updateRole = await this.roleRepository.update(id, data);
+    return updateRole;
+  }
+  async deleteRole(id: number): Promise<DeleteResult> {
+    const deleteRole = await this.roleRepository.delete(id);
+    return deleteRole;
+  }
 }
