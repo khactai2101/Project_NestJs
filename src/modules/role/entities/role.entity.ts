@@ -1,6 +1,6 @@
 // import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { UserEntity } from 'src/modules/users/entitites/user.entity';
+import { UserEntity } from 'src/modules/auth/entities/auth.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('Role')
@@ -18,5 +18,5 @@ export class RoleEntity {
   updateAt: Date;
 
   @OneToMany(() => UserEntity, (user) => user.role)
-  item: UserEntity[];
+  users: UserEntity[];
 }
