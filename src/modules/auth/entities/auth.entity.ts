@@ -1,11 +1,6 @@
+import { Exclude } from 'class-transformer';
 import { RoleEntity } from 'src/modules/role/entities/role.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('Users')
 export class UserEntity {
@@ -18,14 +13,21 @@ export class UserEntity {
   @Column()
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
-  @Column()
+  @Column({
+    default:
+      'https://phongreviews.com/wp-content/uploads/2022/11/avatar-facebook-mac-dinh-8.jpg',
+  })
   avatar: string;
 
   @Column({ default: 1 })
-  status: string;
+  status: number;
+
+  @Column({ nullable: false, default: 1 })
+  roleId: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
@@ -33,12 +35,6 @@ export class UserEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updateAt: Date;
 
-  @ManyToOne(() => RoleEntity, (role) => role.item)
-  @JoinColumn([
-    {
-      name: 'role_id',
-      referencedColumnName: 'id',
-    },
-  ])
+  @ManyToOne(() => RoleEntity, (role) => role.users)
   role: RoleEntity;
 }

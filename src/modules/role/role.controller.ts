@@ -15,9 +15,8 @@ import { GlobalInterface } from 'src/shared/interfaces/global.interface';
 
 require('dotenv').config();
 const initLink = process.env.initLink;
-console.log(initLink);
 
-@Controller('/role')
+@Controller(initLink + '/role')
 export class RoleController {
   constructor(public roleService: RoleService) {}
 

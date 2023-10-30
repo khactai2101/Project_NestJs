@@ -2,9 +2,9 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { Connection } from 'typeorm';
-import { RoleModule } from '../role/role.module';
-dotenv.config();
+import { RoleEntity } from '../role/entities/role.entity';
 
+dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -14,11 +14,11 @@ dotenv.config();
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_DATABASE,
-      // entities: [Role],
+      // entities: [RoleEntity],
+
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
     }),
-    RoleModule,
   ],
 })
 export class MysqlModule implements OnModuleInit {
