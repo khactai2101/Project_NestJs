@@ -7,7 +7,9 @@ const jwtService = new JwtService({
 
 export class GenerateToken {
   signJwt(payload: any, jwtSignOptions?: JwtSignOptions) {
-    console.log(payload, '<<<');
     return jwtService.sign(payload, jwtSignOptions);
+  }
+  verifyJwt(token: string, jwtSignOptions?: JwtSignOptions) {
+    return jwtService.verify(token, jwtSignOptions);
   }
 }
