@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { GlobalInterface } from 'src/shared/interfaces/global.interface';
@@ -13,11 +14,15 @@ import { CategoryService } from './category.service';
 import { BrandService } from '../brand/brand.service';
 import { CategoryDto } from './dto/category.dto';
 import { ICategory } from './interface/category.interface';
+import { CheckAuthenGuard } from 'src/shared/guards/auth.guard';
+import { CheckAuthorGuard } from 'src/shared/guards/role.guard';
 
 require('dotenv').config();
 const initLink = process.env.initLink;
 
 @Controller(initLink + '/categories')
+@UseGuards(CheckAuthenGuard)
+@UseGuards(CheckAuthorGuard)
 export class CategoryController {
   constructor(public categoryService: CategoryService) {}
 

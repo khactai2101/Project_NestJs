@@ -15,7 +15,7 @@ import { LoginDto } from '../auth/dto/login.dto';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
 import { CheckAuthenGuard } from 'src/shared/guards/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from '../uploadClodinary/cloudinary.service';
+import { CloudinaryService } from '../../shared/ultis/uploadClodinary/cloudinary.service';
 import { CheckAuthorGuard } from 'src/shared/guards/role.guard';
 
 require('dotenv').config();
