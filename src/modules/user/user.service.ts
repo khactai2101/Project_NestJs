@@ -6,22 +6,18 @@ import { GlobalInterface } from 'src/shared/interfaces/global.interface';
 
 @Injectable()
 export class UserService {
-  constructor(private UserRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
   async getAllUser(): Promise<IUser[]> {
-    return await this.UserRepository.findAllUser();
+    return await this.userRepository.findAllUser();
   }
-  async getUserById(id: number): Promise<any> {
+  async getOneUserService(id: number) {
     console.log(id);
 
-    const User = await this.UserRepository.findOnlyUser(id);
-    if (!User) {
-      return 'Id not found.';
-    }
-    return User;
+    return await this.userRepository.findOnlyUser(id);
   }
   async updateUserService(id: number, data: IUser): Promise<GlobalInterface> {
-    const req = await this.UserRepository.updateUser(id, data);
+    const req = await this.userRepository.updateUser(id, data);
 
     if (req.affected === 1) {
       return {
@@ -31,13 +27,17 @@ export class UserService {
     }
   }
 
-  //   async deleteUser(id: number): Promise<GlobalInterface> {
-  //     const req = await this.UserRepository.deleteUser(id);
-  //     if (req.affected === 1) {
-  //       return {
-  //         success: true,
-  //         message: 'User deleted successfully',
-  //       };
-  //     }
+  // async updateStatusService(id: number, body: IUser): Promise<GlobalInterface> {
+  //   const response = await this.userRepository.updateStatus(id, body);
+  //   if (response.affected == 1) {
+  //     return {
+  //       success: true,
+  //       message: 'Change status successfully',
+  //     };
   //   }
+  //   return {
+  //     success: false,
+  //     message: 'Id User not found',
+  //   };
+  // }
 }

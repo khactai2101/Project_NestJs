@@ -16,6 +16,7 @@ import { SharedDataService } from 'src/shared/middlewares/shareData.service';
 import { CheckAuthenGuard } from 'src/shared/guards/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from '../uploadClodinary/cloudinary.service';
+import { CheckAuthorGuard } from 'src/shared/guards/role.guard';
 
 require('dotenv').config();
 const initLink = process.env.initLink;
@@ -31,12 +32,16 @@ export class UserController {
   ) {}
 
   @Get('/')
+  @UseGuards(CheckAuthenGuard)
+  @UseGuards(CheckAuthorGuard)
   async getAllUser(): Promise<IUser[]> {
     return await this.userService.getAllUser();
   }
-  @Get('/:id')
-  async getUserById(@Param('id') id: number): Promise<any> {
-    return await this.userService.getUserById(id);
+  @Get('/me')
+  @UseGuards(CheckAuthenGuard)
+  async getOneUser(): Promise<IUser> {
+    const currentToken = this.sharedDataService.getCurrentToken();
+    return await this.userService.getOneUserService(currentToken.token.id);
   }
 
   @Put('/update')
@@ -57,7 +62,7 @@ export class UserController {
   }
 
   // @Put('/:id')
-  // async deleteRole(@Param('id') id: number): Promise<GlobalInterface> {
-  //   return await this.roleService.deleteRole(id);
+  // async updateStatusUser(@Param('id') id: number, @Body() body): Promise<any> {
+  //   return await this.userService.updateStatusService(id, body);
   // }
 }

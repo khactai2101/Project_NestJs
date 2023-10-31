@@ -11,7 +11,7 @@ import { GlobalInterface } from 'src/shared/interfaces/global.interface';
 export class BrandService {
   constructor(private brandRepository: BrandRepository) {}
   async createBrand(data: BrandDto): Promise<BrandEntity> {
-    const newBrand = await this.brandRepository.createRole(data);
+    const newBrand = await this.brandRepository.createBrand(data);
     return newBrand;
   }
   async getAllBrandService(): Promise<IBrand[]> {
