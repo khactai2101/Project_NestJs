@@ -1,13 +1,22 @@
 import { ProductEntity } from 'src/modules/product/entities/product.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity('Categories')
-export class CategoryEntity {
+@Entity('Images')
+export class ImageEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ unique: true })
-  category: string;
+  @Column()
+  src: string;
+
+  @Column()
+  productId: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
@@ -15,6 +24,6 @@ export class CategoryEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updateAt: Date;
 
-  @OneToMany(() => ProductEntity, (product) => product.category)
-  product: ProductEntity[];
+  @ManyToOne(() => ProductEntity, (product) => product.images)
+  product: ProductEntity;
 }

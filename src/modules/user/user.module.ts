@@ -6,7 +6,7 @@ import { UserEntity } from '../auth/entities/auth.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenerateToken } from 'src/shared/middlewares/generateToken';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
-import { CloudinaryModule } from '../uploadClodinary/cloudinary.module';
+import { CloudinaryModule } from '../../shared/ultis/uploadClodinary/cloudinary.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity]), CloudinaryModule],
