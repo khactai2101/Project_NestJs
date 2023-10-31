@@ -1,6 +1,13 @@
 import { Exclude } from 'class-transformer';
+import { AddressEntity } from 'src/modules/address/entities/address.entity';
 import { RoleEntity } from 'src/modules/role/entities/role.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('Users')
 export class UserEntity {
@@ -37,4 +44,7 @@ export class UserEntity {
 
   @ManyToOne(() => RoleEntity, (role) => role.users)
   role: RoleEntity;
+
+  @OneToMany(() => AddressEntity, (address) => address.user)
+  addresses: AddressEntity[];
 }

@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { UserEntity } from '../auth/entities/auth.entity';
 import { IUser } from './interface/user.interface';
-import { LoginDto } from '../auth/dto/login.dto';
 
 @Injectable()
 export class UserRepository {
@@ -13,19 +12,19 @@ export class UserRepository {
   ) {}
 
   async findAllUser(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({ relations: ['role', 'addresses'] });
   }
   async findOnlyUser(id: number): Promise<IUser> {
-    const User = await this.userRepository.findOne({ where: { id: id } });
-    return User;
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: ['role', 'addresses'],
+    });
   }
 
-  async updateUser(id: number, data: IUser): Promise<IUser | any> {
-    const updateUser = await this.userRepository.update(id, data);
-    return updateUser;
+  async updateUser(id: number, data: IUser): Promise<any> {
+    return await this.userRepository.update(id, data);
   }
-  //   async deleteUser(id: number): Promise<DeleteResult> {
-  //     const deleteUser = await this.UserRepository.delete(id);
-  //     return deleteUser;
-  //   }
+  // async updateStatus(id: number, body: IUser): Promise<any> {
+  //   return await this.userRepository.update(id, body);
+  // }
 }

@@ -1,11 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('Brands')
-export class BrandEntity {
+@Entity('Categories')
+export class CategoryEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
+
   @Column({ unique: true })
-  name: string;
+  category: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
 

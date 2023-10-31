@@ -11,7 +11,7 @@ export class BrandRepository {
     @InjectRepository(BrandEntity)
     private brandRepository: Repository<BrandEntity>,
   ) {}
-  async createRole(data: BrandDto) {
+  async createBrand(data: BrandDto) {
     const newBrand = this.brandRepository.create(data);
     await this.brandRepository.save(newBrand);
     return newBrand;

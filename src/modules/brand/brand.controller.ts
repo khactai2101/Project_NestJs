@@ -6,42 +6,47 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { BrandService } from './brand.service';
-import { BrandDto } from './dto/brand.dto';
-import { IBrand } from './interface/brand.interface';
 import { GlobalInterface } from 'src/shared/interfaces/global.interface';
+import { BrandService } from '../brand/brand.service';
+import { BrandDto } from '../brand/dto/brand.dto';
+import { IBrand } from './interface/brand.interface';
+import { CheckAuthenGuard } from 'src/shared/guards/auth.guard';
+import { CheckAuthorGuard } from 'src/shared/guards/role.guard';
 
 require('dotenv').config();
 const initLink = process.env.initLink;
 
 @Controller(initLink + '/brands')
+@UseGuards(CheckAuthenGuard)
+@UseGuards(CheckAuthorGuard)
 export class BrandController {
   constructor(public brandService: BrandService) {}
 
   @Post('/')
-  async createBrand(@Body() brandData: BrandDto): Promise<IBrand> {
+  async createbrand(@Body() brandData: BrandDto): Promise<IBrand> {
     return await this.brandService.createBrand(brandData);
   }
   @Get('/')
-  async getAllBrand(): Promise<IBrand[]> {
+  async getAllbrand(): Promise<IBrand[]> {
     return await this.brandService.getAllBrandService();
   }
   @Get('/:id')
-  async getBrandById(@Param('id') id: number): Promise<any> {
+  async getbrandById(@Param('id') id: number): Promise<any> {
     return await this.brandService.getBrandById(id);
   }
 
   @Put('/:id')
-  async updateBrand(
+  async updatebrand(
     @Param('id') id: number,
-    @Body() BrandData: IBrand,
+    @Body() brandData: IBrand,
   ): Promise<IBrand> {
-    return await this.brandService.updateBrandService(id, BrandData);
+    return await this.brandService.updateBrandService(id, brandData);
   }
   @Delete('/:id')
-  async deleteBrand(@Param('id') id: number): Promise<GlobalInterface> {
+  async deletebrand(@Param('id') id: number): Promise<GlobalInterface> {
     return await this.brandService.deleteBrand(id);
   }
 }
