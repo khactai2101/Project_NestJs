@@ -16,6 +16,9 @@ export class ProductDto {
   @IsNotEmpty()
   categoryId: number;
 
+  // @IsNotEmpty()
+  // size: string;
+
   @IsNotEmpty()
   brandId: number;
 }

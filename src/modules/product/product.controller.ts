@@ -36,7 +36,7 @@ export class ProductController {
   @UseInterceptors(FilesInterceptor('images'))
   async createProduct(
     @UploadedFiles() files: Express.Multer.File[],
-    @Body() productData: ProductDto,
+    @Body() productData: any,
   ): Promise<any> {
     const data = {
       name: productData.name,
@@ -50,8 +50,12 @@ export class ProductController {
     const dataImage = image.map((item) => {
       return item.url;
     });
-
-    return await this.productService.createProduct(data, dataImage);
+    const size = JSON.parse(productData.size);
+    return await this.productService.createProduct(data, dataImage, size);
+  }
+  @Post('/productSize')
+  async createProductSize(@Body() data: any): Promise<any> {
+    return await this.productService.createProductSize(data);
   }
   @Get('/')
   async getAllProduct(): Promise<IProducts[]> {

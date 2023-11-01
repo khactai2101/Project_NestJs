@@ -2,7 +2,6 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { Connection } from 'typeorm';
-import { RoleEntity } from '../role/entities/role.entity';
 
 dotenv.config();
 @Module({

@@ -7,8 +7,13 @@ import { GlobalInterface } from 'src/shared/interfaces/global.interface';
 @Injectable()
 export class ProductService {
   constructor(private productRepository: ProductRepository) {}
-  async createProduct(data: ProductDto, dataImage: string[]): Promise<any> {
+  async createProduct(
+    data: ProductDto,
+    dataImage: string[],
+    size: string[],
+  ): Promise<any> {
     const newProduct = await this.productRepository.createProduct(data);
+
     if (newProduct) {
       const imageArray = dataImage?.map((item) => ({
         productId: newProduct.id,
@@ -17,7 +22,19 @@ export class ProductService {
       for (const img of imageArray) {
         await this.productRepository.createImage(img);
       }
+      const sizeArray = size?.map((item) => ({
+        productsId: newProduct.id,
+        sizesId: item,
+      }));
+      for (const sizeMap of sizeArray) {
+        await this.productRepository.createSize(sizeMap);
+      }
     }
+  }
+
+  async createProductSize(data: any): Promise<any> {
+    console.log(data);
+    return await this.productRepository.createProductSizeRepository(data);
   }
   async getAllProduct(): Promise<IProducts[]> {
     return await this.productRepository.findAllProduct();

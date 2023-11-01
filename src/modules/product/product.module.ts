@@ -8,9 +8,13 @@ import { CloudinaryService } from '../../shared/ultis/uploadClodinary/cloudinary
 import { ImageEntity } from '../image/entities/image.entity';
 import { GenerateToken } from 'src/shared/middlewares/generateToken';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
+import { SizeEntity } from '../size/entities/size.entity';
+import { ProductSizeEntity } from './entities/productSize.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProductEntity, ImageEntity])],
+  imports: [
+    TypeOrmModule.forFeature([ProductEntity, ImageEntity, ProductSizeEntity]),
+  ],
   controllers: [ProductController],
   providers: [
     ProductService,
