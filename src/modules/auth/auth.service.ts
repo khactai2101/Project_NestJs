@@ -14,7 +14,6 @@ export class AuthService {
       bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const user = {
       ...req,
-
       password: hashPassword(req.password),
     };
     const existingUser = await this.authRepository.registerRepository({

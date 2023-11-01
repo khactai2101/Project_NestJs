@@ -27,7 +27,6 @@ export class AuthRepository {
     if (existingUser) {
       return false;
     }
-    // const newUser = this.userRepository.create(registerDto);
     await this.userRepository.save(registerDto);
     return true;
   }

@@ -4,7 +4,6 @@ import { LoginDto } from '../auth/dto/login.dto';
 import { BrandDto } from './dto/brand.dto';
 import { BrandEntity } from './entities/brand.entity';
 import { BrandRepository } from './brand.repository';
-import { log } from 'console';
 import { GlobalInterface } from 'src/shared/interfaces/global.interface';
 
 @Injectable()

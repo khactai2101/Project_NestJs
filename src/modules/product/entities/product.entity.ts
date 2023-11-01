@@ -6,10 +6,14 @@ import { ImageEntity } from 'src/modules/image/entities/image.entity';
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ProductSizeEntity } from './productSize.entity';
+import { SizeEntity } from 'src/modules/size/entities/size.entity';
 
 @Entity('Products')
 export class ProductEntity {
@@ -51,4 +55,11 @@ export class ProductEntity {
 
   @OneToMany(() => ImageEntity, (image) => image.product)
   images: ImageEntity[];
+
+  @OneToMany(() => ProductSizeEntity, (productSize) => productSize.products)
+  productSizes: ProductSizeEntity[];
+
+  @ManyToMany(() => SizeEntity)
+  @JoinTable({ name: 'ProductSizes' })
+  size: SizeEntity[];
 }

@@ -5,6 +5,7 @@ import { ProductEntity } from './entities/product.entity';
 import { ProductDto, ProductStatusDto } from './dto/product.dto';
 import { ImageEntity } from '../image/entities/image.entity';
 import { IProducts } from './interface/product.interface';
+import { ProductSizeEntity } from './entities/productSize.entity';
 
 @Injectable()
 export class ProductRepository {
@@ -13,8 +14,9 @@ export class ProductRepository {
     private productRepository: Repository<ProductEntity>,
     @InjectRepository(ImageEntity)
     private imageRepository: Repository<ImageEntity>,
+    @InjectRepository(ProductSizeEntity)
+    private productSizeRepository: Repository<ProductSizeEntity>,
   ) {}
-
   async createProduct(data: ProductDto) {
     const newProduct = this.productRepository.create(data);
     await this.productRepository.save(newProduct);
@@ -25,19 +27,27 @@ export class ProductRepository {
     await this.imageRepository.save(newImage);
     return newImage;
   }
+  async createProductSizeRepository(data: any) {
+    await this.productSizeRepository.create(data);
+    return await this.productSizeRepository.save(data);
+  }
+  async createSize(data: any) {
+    await this.productSizeRepository.create(data);
+    return await this.productSizeRepository.save(data);
+  }
+
   async findAllProduct(): Promise<IProducts[]> {
     return this.productRepository.find({
-      relations: ['brand', 'category', 'images'],
+      relations: ['brand', 'category', 'images', 'size'],
     });
   }
   async findOnlyProduct(id: number): Promise<any> {
     const product = await this.productRepository.find({
       where: { id: id },
-      relations: ['brand', 'category', 'images'],
+      relations: ['brand', 'category', 'images', 'size'],
     });
     return product;
   }
-
   async updateProduct(id: number, data: ProductDto): Promise<IProducts | any> {
     return await this.productRepository.update(id, data);
   }
@@ -52,6 +62,7 @@ export class ProductRepository {
   }
   async deleteProduct(id: number): Promise<DeleteResult> {
     await this.imageRepository.delete({ productId: id });
+    await this.productSizeRepository.delete({ productsId: id });
     return await this.productRepository.delete(id);
   }
 }

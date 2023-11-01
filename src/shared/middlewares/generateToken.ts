@@ -4,7 +4,6 @@ dotenv.config();
 const jwtService = new JwtService({
   secretOrPrivateKey: process.env.JWT_SECRET_KEY,
 });
-
 export class GenerateToken {
   signJwt(payload: any, jwtSignOptions?: JwtSignOptions) {
     return jwtService.sign(payload, jwtSignOptions);

@@ -8,6 +8,8 @@ import { BrandModule } from './modules/brand/brand.module';
 import { AddressModule } from './modules/address/address.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
+import { SizeModule } from './modules/size/size.module';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { ProductModule } from './modules/product/product.module';
     AddressModule,
     CategoryModule,
     ProductModule,
+    SizeModule,
+    CartModule,
   ],
 })
 export class AppModule implements NestModule {
