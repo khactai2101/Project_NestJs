@@ -14,6 +14,7 @@ import {
 } from 'typeorm';
 import { ProductSizeEntity } from './productSize.entity';
 import { SizeEntity } from 'src/modules/size/entities/size.entity';
+import { CartEntity } from 'src/modules/cart/entities/cart.entity';
 
 @Entity('Products')
 export class ProductEntity {
@@ -47,10 +48,12 @@ export class ProductEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updateAt: Date;
 
-  @ManyToOne(() => BrandEntity, (brand) => brand.product)
+  @ManyToOne(() => BrandEntity, (brand) => brand.product, { eager: true })
   brand: BrandEntity;
 
-  @ManyToOne(() => CategoryEntity, (category) => category.product)
+  @ManyToOne(() => CategoryEntity, (category) => category.product, {
+    eager: true,
+  })
   category: CategoryEntity;
 
   @OneToMany(() => ImageEntity, (image) => image.product)
@@ -58,6 +61,9 @@ export class ProductEntity {
 
   @OneToMany(() => ProductSizeEntity, (productSize) => productSize.products)
   productSizes: ProductSizeEntity[];
+
+  @OneToMany(() => CartEntity, (cart) => cart.product)
+  carts: CartEntity[];
 
   @ManyToMany(() => SizeEntity)
   @JoinTable({ name: 'ProductSizes' })

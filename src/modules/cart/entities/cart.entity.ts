@@ -1,5 +1,12 @@
 import { ProductEntity } from 'src/modules/product/entities/product.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { SizeEntity } from 'src/modules/size/entities/size.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('Carts')
 export class CartEntity {
@@ -13,6 +20,9 @@ export class CartEntity {
   sizeId: number;
 
   @Column()
+  quantity: number;
+
+  @Column()
   userId: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -23,4 +33,10 @@ export class CartEntity {
 
   // @OneToMany(() => ProductEntity, (product) => product.brand)
   // product: ProductEntity[];
+
+  @ManyToOne(() => SizeEntity, (size) => size.carts)
+  size: SizeEntity;
+
+  @ManyToOne(() => ProductEntity, (product) => product.carts)
+  product: ProductEntity;
 }
