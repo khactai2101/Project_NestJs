@@ -8,5 +8,5 @@ export class CartDto {
   sizeId: number;
 
   @IsNotEmpty()
-  userId: number;
+  quantity: number;
 }

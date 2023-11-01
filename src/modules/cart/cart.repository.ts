@@ -11,24 +11,22 @@ export class CartRepository {
     @InjectRepository(CartEntity)
     private cartRepository: Repository<CartEntity>,
   ) {}
-  async createCart(data: CartDto) {
+  async createCart(data: any) {
     const newCart = this.cartRepository.create(data);
     return await this.cartRepository.save(newCart);
   }
-  // async findAllCart(): Promise<CartEntity[]> {
-  //   return this.cartRepository.find();
-  // }
-  // async findOnlyCart(id: number): Promise<ICart> {
-  //   const Cart = await this.cartRepository.findOne({ where: { id: id } });
-  //   return Cart;
-  // }
-
-  // async updateCart(id: number, data: ICart): Promise<any> {
-  //   const updateCart = await this.cartRepository.update(id, data);
-  //   return updateCart;
-  // }
-  // async deleteCart(id: number): Promise<DeleteResult> {
-  //   const deleteCart = await this.cartRepository.delete(id);
-  //   return deleteCart;
-  // }
+  async findAllCart(userId: number): Promise<any> {
+    return this.cartRepository.find({
+      where: { userId },
+      relations: ['size', 'product'],
+    });
+  }
+  async updateCart(id: number, data: ICart): Promise<any> {
+    const updateCart = await this.cartRepository.update(id, data);
+    return updateCart;
+  }
+  async deleteCart(id: number): Promise<DeleteResult> {
+    const deleteCart = await this.cartRepository.delete(id);
+    return deleteCart;
+  }
 }

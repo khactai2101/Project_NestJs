@@ -9,32 +9,23 @@ import { CartRepository } from './cart.repository';
 @Injectable()
 export class CartService {
   constructor(private cartRepository: CartRepository) {}
-  async createCart(data: CartDto): Promise<CartEntity> {
+  async createCart(data: any): Promise<any> {
     return await this.cartRepository.createCart(data);
   }
-  // async getAllCartService(): Promise<ICart[]> {
-  //   return await this.cartRepository.findAllCart();
-  // }
-  // async getCartById(id: number): Promise<any> {
-  //   const Cart = await this.cartRepository.findOnlyCart(id);
-  //   if (!Cart) {
-  //     return {
-  //       success: false,
-  //       message: 'Id not found',
-  //     };
-  //   }
-  //   return Cart;
-  // }
-  // async updateCartService(id: number, data: ICart): Promise<ICart> {
-  //   return await this.cartRepository.updateCart(id, data);
-  // }
-  // async deleteCart(id: number): Promise<GlobalInterface> {
-  //   const req = await this.cartRepository.deleteCart(id);
-  //   if (req.affected === 1) {
-  //     return {
-  //       success: true,
-  //       message: 'Cart deleted successfully',
-  //     };
-  //   }
-  // }
+  async getAllCartService(userId: number): Promise<any> {
+    return await this.cartRepository.findAllCart(userId);
+  }
+
+  async updateCartService(id: number, data: ICart): Promise<ICart> {
+    return await this.cartRepository.updateCart(id, data);
+  }
+  async deleteCart(id: number): Promise<GlobalInterface> {
+    const req = await this.cartRepository.deleteCart(id);
+    if (req.affected === 1) {
+      return {
+        success: true,
+        message: 'Cart deleted successfully',
+      };
+    }
+  }
 }
