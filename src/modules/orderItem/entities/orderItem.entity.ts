@@ -3,15 +3,20 @@ import { SizeEntity } from 'src/modules/size/entities/size.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { OrderEntity } from './order.entity';
 
-@Entity('Carts')
-export class CartEntity {
+@Entity('OrderItems')
+export class OrderItemEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
+
+  @Column()
+  codeOrder: number;
 
   @Column()
   productId: number;
@@ -21,9 +26,6 @@ export class CartEntity {
 
   @Column()
   quantity: number;
-
-  @Column()
-  userId: number;
 
   @Column({
     type: 'timestamp',
@@ -38,10 +40,18 @@ export class CartEntity {
     select: false,
   })
   updateAt: Date;
+  @ManyToOne(() => OrderEntity, (order) => order.orderItems)
+  @JoinColumn({ name: 'codeOrder', referencedColumnName: 'codeOrder' })
+  order: OrderEntity;
 
-  @ManyToOne(() => SizeEntity, (size) => size.carts)
-  size: SizeEntity;
+  // @OneToMany(() => ProductEntity, (product) => product.brand)
+  // product: ProductEntity[];
 
-  @ManyToOne(() => ProductEntity, (product) => product.carts)
+  @ManyToOne(() => ProductEntity, (product) => product.orderItems, {
+    eager: true,
+  })
   product: ProductEntity;
+
+  // @ManyToOne(() => ProductEntity, (product) => product.carts)
+  // product: ProductEntity;
 }
