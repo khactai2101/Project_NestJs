@@ -3,13 +3,13 @@ import { LoginDto } from '../auth/dto/login.dto';
 import { OrderItemDto } from './dto/orderItem.dto';
 import { OrderItemEntity } from './entities/orderItem.entity';
 import { GlobalInterface } from 'src/shared/interfaces/global.interface';
-import { OrderItemRepository } from './orderItem.repository';
+import { OrderRepository } from './order.repository';
 
 @Injectable()
-export class OrderItemService {
-  constructor(private orderItemRepository: OrderItemRepository) {}
+export class OrderService {
+  constructor(private orderRepository: OrderRepository) {}
   async createOrderItem(userId: number): Promise<any> {
-    const res = await this.orderItemRepository.findCartByUser(userId);
+    const res = await this.orderRepository.findCartByUser(userId);
     const min = 1000000;
     const max = 9999999;
     const codeOrder = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -20,7 +20,7 @@ export class OrderItemService {
       quantity: item.quantity,
     }));
     for (const item of orderItem) {
-      await this.orderItemRepository.createOrderItem(item);
+      await this.orderRepository.createOrderItem(item);
     }
     const order = {
       codeOrder,
@@ -29,21 +29,18 @@ export class OrderItemService {
       userId,
     };
 
-    return await this.orderItemRepository.createOrder(order);
+    return await this.orderRepository.createOrder(order);
   }
   async getAllOrderService(userId: number): Promise<any> {
-    return await this.orderItemRepository.findAllOrder(userId);
+    return await this.orderRepository.findAllOrder(userId);
   }
   async getAllOrderByAdminService(): Promise<any> {
-    return await this.orderItemRepository.findAllOrderByAdmin();
+    return await this.orderRepository.findAllOrderByAdmin();
   }
 
-  // async updateOrderItemService(
-  //   id: number,
-  //   data: IOrderItem,
-  // ): Promise<IOrderItem> {
-  //   return await this.OrderItemRepository.updateOrderItem(id, data);
-  // }
+  async updateStatusOrderService(id: number, data: any) {
+    return await this.orderRepository.updateStatusOrder(id, data);
+  }
   // async deleteOrderItem(id: number): Promise<GlobalInterface> {
   //   const req = await this.OrderItemRepository.deleteOrderItem(id);
   //   if (req.affected === 1) {
