@@ -10,7 +10,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
 import { SizeModule } from './modules/size/size.module';
 import { CartModule } from './modules/cart/cart.module';
-import { OrderItemModule } from './modules/orderItem/orderItem.module';
+import { OrderModule } from './modules/orderItem/order.module';
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { OrderItemModule } from './modules/orderItem/orderItem.module';
     ProductModule,
     SizeModule,
     CartModule,
-    OrderItemModule,
+    OrderModule,
   ],
 })
 export class AppModule implements NestModule {

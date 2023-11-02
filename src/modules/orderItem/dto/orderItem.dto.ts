@@ -14,5 +14,8 @@ export class OrderItemDto {
   userId: number;
 
   @IsNotEmpty()
+  status: number;
+
+  @IsNotEmpty()
   quantity: number;
 }

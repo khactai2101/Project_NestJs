@@ -31,6 +31,9 @@ export class OrderEntity {
   @Column()
   userId: number;
 
+  @Column({ default: 1 })
+  status: number;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
 
