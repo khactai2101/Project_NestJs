@@ -15,6 +15,7 @@ import {
 import { ProductSizeEntity } from './productSize.entity';
 import { SizeEntity } from 'src/modules/size/entities/size.entity';
 import { CartEntity } from 'src/modules/cart/entities/cart.entity';
+import { OrderItemEntity } from 'src/modules/orderItem/entities/orderItem.entity';
 
 @Entity('Products')
 export class ProductEntity {
@@ -42,10 +43,18 @@ export class ProductEntity {
   @Column()
   brandId: number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    select: false,
+  })
   createAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    select: false,
+  })
   updateAt: Date;
 
   @ManyToOne(() => BrandEntity, (brand) => brand.product, { eager: true })
@@ -56,7 +65,7 @@ export class ProductEntity {
   })
   category: CategoryEntity;
 
-  @OneToMany(() => ImageEntity, (image) => image.product)
+  @OneToMany(() => ImageEntity, (image) => image.product, { eager: true })
   images: ImageEntity[];
 
   @OneToMany(() => ProductSizeEntity, (productSize) => productSize.products)
@@ -64,6 +73,9 @@ export class ProductEntity {
 
   @OneToMany(() => CartEntity, (cart) => cart.product)
   carts: CartEntity[];
+
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.product)
+  orderItems: OrderItemEntity[];
 
   @ManyToMany(() => SizeEntity)
   @JoinTable({ name: 'ProductSizes' })

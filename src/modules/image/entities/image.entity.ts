@@ -18,10 +18,18 @@ export class ImageEntity {
   @Column()
   productId: number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    select: false,
+  })
   createAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    select: false,
+  })
   updateAt: Date;
 
   @ManyToOne(() => ProductEntity, (product) => product.images)

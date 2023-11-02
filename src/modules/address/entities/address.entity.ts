@@ -1,5 +1,12 @@
 import { UserEntity } from 'src/modules/auth/entities/auth.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderEntity } from 'src/modules/orderItem/entities/order.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('Addresses')
 export class AddressEntity {
@@ -12,15 +19,28 @@ export class AddressEntity {
   @Column()
   phoneNumber: number;
 
-  @Column()
+  @Column({
+    select: false,
+  })
   userId: number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    select: false,
+  })
   createAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    select: false,
+  })
   updateAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.addresses)
   user: UserEntity;
+
+  @OneToMany(() => OrderEntity, (order) => order.address)
+  orders: OrderEntity[];
 }
