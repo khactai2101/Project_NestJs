@@ -16,6 +16,7 @@ import { ProductSizeEntity } from './productSize.entity';
 import { SizeEntity } from 'src/modules/size/entities/size.entity';
 import { CartEntity } from 'src/modules/cart/entities/cart.entity';
 import { OrderItemEntity } from 'src/modules/orderItem/entities/orderItem.entity';
+import { FavoriteEntity } from 'src/modules/favorite/entities/favorite.entity';
 
 @Entity('Products')
 export class ProductEntity {
@@ -73,6 +74,9 @@ export class ProductEntity {
 
   @OneToMany(() => CartEntity, (cart) => cart.product)
   carts: CartEntity[];
+
+  @OneToMany(() => FavoriteEntity, (favorite) => favorite.product)
+  favorites: FavoriteEntity[];
 
   @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.product)
   orderItems: OrderItemEntity[];

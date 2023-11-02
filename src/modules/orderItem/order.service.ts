@@ -13,15 +13,6 @@ export class OrderService {
     const min = 1000000;
     const max = 9999999;
     const codeOrder = Math.floor(Math.random() * (max - min + 1)) + min;
-    const orderItem = res?.map((item) => ({
-      codeOrder,
-      productId: item.productId,
-      sizeId: item.sizeId,
-      quantity: item.quantity,
-    }));
-    for (const item of orderItem) {
-      await this.orderRepository.createOrderItem(item);
-    }
     const order = {
       codeOrder,
       addressId: 1,
@@ -29,7 +20,23 @@ export class OrderService {
       userId,
     };
 
-    return await this.orderRepository.createOrder(order);
+    const resOrder = await this.orderRepository.createOrder(order);
+    const orderItem = res?.map((item) => ({
+      cartId: item.id,
+      codeOrder,
+      productId: item.productId,
+      sizeId: item.sizeId,
+      quantity: item.quantity,
+    }));
+    for (const item of orderItem) {
+      await this.orderRepository.createOrderItem(item);
+      await this.orderRepository.deleteCartByUser(item.cartId);
+      await this.orderRepository.updateStockProduct(
+        item.productId,
+        item.quantity,
+      );
+    }
+    return resOrder;
   }
   async getAllOrderService(userId: number): Promise<any> {
     return await this.orderRepository.findAllOrder(userId);

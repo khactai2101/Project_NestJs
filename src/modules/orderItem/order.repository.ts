@@ -6,6 +6,7 @@ import { OrderItemEntity } from './entities/orderItem.entity';
 import { CartEntity } from '../cart/entities/cart.entity';
 import { OrderEntity } from './entities/order.entity';
 import { IOrder } from './interface/orderItem.interface';
+import { ProductEntity } from '../product/entities/product.entity';
 
 @Injectable()
 export class OrderRepository {
@@ -18,6 +19,8 @@ export class OrderRepository {
 
     @InjectRepository(OrderEntity)
     private orderRepository: Repository<OrderEntity>,
+    @InjectRepository(ProductEntity)
+    private productRepository: Repository<ProductEntity>,
   ) {}
   async findCartByUser(userId: number) {
     return await this.cartRepository.find({
@@ -26,13 +29,28 @@ export class OrderRepository {
   }
 
   async createOrderItem(orderItem: any) {
+    const data = {
+      codeOrder: orderItem.codeOrder,
+      productId: orderItem.productId,
+      sizeId: orderItem.sizeId,
+      quantity: orderItem.quantity,
+    };
+    await this.orderRepository.create(data);
     await this.orderItemRepository.create(orderItem);
     return await this.orderItemRepository.save(orderItem);
   }
 
   async createOrder(order: any) {
-    await this.orderRepository.create(order);
     return await this.orderRepository.save(order);
+  }
+  async updateStockProduct(id: number, quantity: number) {
+    const productItem = await this.productRepository.findOneBy({ id });
+    await this.productRepository.update(id, {
+      stock: productItem.stock - quantity,
+    });
+  }
+  async deleteCartByUser(id: number) {
+    await this.cartRepository.delete(id);
   }
 
   async findAllOrder(userId: number): Promise<any> {
