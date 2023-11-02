@@ -11,6 +11,7 @@ import { ProductModule } from './modules/product/product.module';
 import { SizeModule } from './modules/size/size.module';
 import { CartModule } from './modules/cart/cart.module';
 import { OrderModule } from './modules/orderItem/order.module';
+import { FavoriteModule } from './modules/favorite/favorite.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { OrderModule } from './modules/orderItem/order.module';
     SizeModule,
     CartModule,
     OrderModule,
+    FavoriteModule,
   ],
 })
 export class AppModule implements NestModule {

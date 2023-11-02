@@ -13,43 +13,41 @@ import { GlobalInterface } from 'src/shared/interfaces/global.interface';
 import { CheckAuthenGuard } from 'src/shared/guards/auth.guard';
 import { CheckAuthorGuard } from 'src/shared/guards/role.guard';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
-import { OrderService } from './order.service';
-import { OrderItemDto } from './dto/orderItem.dto';
+import { FavoriteDto } from './dto/favorite.dto';
+import { FavoriteService } from './favorite.service';
 
 require('dotenv').config();
 const initLink = process.env.initLink;
 
-@Controller(initLink + '/order')
+@Controller(initLink + '/favorites')
 @UseGuards(CheckAuthenGuard)
-export class OrderController {
+export class FavoriteController {
   constructor(
-    public orderService: OrderService,
+    public favoriteService: FavoriteService,
     private sharedDataService: SharedDataService,
   ) {}
 
   @Post('/')
-  async createOrderItem(): Promise<any> {
+  async createFavorite(@Body() favoriteData: FavoriteDto): Promise<any> {
     const currentToken = this.sharedDataService.getCurrentToken();
     const userId = currentToken.token.id;
-    return await this.orderService.createOrderItem(userId);
+
+    const data = {
+      ...favoriteData,
+      userId,
+    };
+    return await this.favoriteService.createFavorite(data);
   }
   @Get('/me')
-  async getAllOrder(): Promise<any> {
+  async getAllFavorite(): Promise<any> {
     const currentToken = this.sharedDataService.getCurrentToken();
     const userId = currentToken.token.id;
-    return await this.orderService.getAllOrderService(userId);
-  }
-  @Get('/')
-  @UseGuards(CheckAuthorGuard)
-  async getAllOrderByAdmin(): Promise<any> {
-    return await this.orderService.getAllOrderByAdminService();
+
+    return await this.favoriteService.getAllFavoriteService(userId);
   }
 
-  @Put('/:id')
-  async updateOrderItem(@Param('id') id: number, @Body() statusOrderItem: any) {
-    return await this.orderService.updateStatusOrderService(
-      id,
-      statusOrderItem,
-    );
+  @Delete('/:id')
+  async deleteFavorite(@Param('id') id: number): Promise<GlobalInterface> {
+    return await this.favoriteService.deleteFavorite(id);
   }
 }

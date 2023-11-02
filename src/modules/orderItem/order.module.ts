@@ -8,10 +8,16 @@ import { OrderEntity } from './entities/order.entity';
 import { OrderService } from './order.service';
 import { OrderRepository } from './order.repository';
 import { OrderController } from './order.controller';
+import { ProductEntity } from '../product/entities/product.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([OrderItemEntity, CartEntity, OrderEntity]),
+    TypeOrmModule.forFeature([
+      OrderItemEntity,
+      CartEntity,
+      OrderEntity,
+      ProductEntity,
+    ]),
   ],
   providers: [OrderService, OrderRepository, GenerateToken, SharedDataService],
   controllers: [OrderController],

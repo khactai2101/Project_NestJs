@@ -1,4 +1,5 @@
 import { CartEntity } from 'src/modules/cart/entities/cart.entity';
+import { FavoriteEntity } from 'src/modules/favorite/entities/favorite.entity';
 import { ProductSizeEntity } from 'src/modules/product/entities/productSize.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -32,4 +33,13 @@ export class SizeEntity {
 
   @OneToMany(() => CartEntity, (cart) => cart.size)
   carts: CartEntity[];
+
+  // @OneToMany(() => FavoriteEntity, (favorite) => favorite.size)
+  // favorites: FavoriteEntity[];
+
+  @OneToMany(() => FavoriteEntity, (favorite) => favorite.size)
+  favorites: FavoriteEntity[];
+
+  // @OneToMany(() => FavoriteEntity, (favorite) => favorite.size)
+  // favorites: FavoriteEntity[];
 }
