@@ -2,7 +2,10 @@ import { Body, Injectable, Param } from '@nestjs/common';
 import { ProductDto, ProductStatusDto } from './dto/product.dto';
 import { ProductRepository } from './product.repository';
 import { IProducts } from './interface/product.interface';
-import { GlobalInterface } from 'src/shared/interfaces/global.interface';
+import {
+  GlobalInterface,
+  ISearch,
+} from 'src/shared/interfaces/global.interface';
 
 @Injectable()
 export class ProductService {
@@ -29,15 +32,18 @@ export class ProductService {
       for (const sizeMap of sizeArray) {
         await this.productRepository.createSize(sizeMap);
       }
+      return {
+        success: true,
+        message: 'Product created successfully',
+      };
     }
   }
 
   async createProductSize(data: any): Promise<any> {
-    console.log(data);
     return await this.productRepository.createProductSizeRepository(data);
   }
-  async getAllProduct(): Promise<IProducts[]> {
-    return await this.productRepository.findAllProduct();
+  async getAllProduct(data: ISearch): Promise<IProducts[]> {
+    return await this.productRepository.findAllProduct(data);
   }
   async getProductById(id: number): Promise<IProducts | string> {
     const product = await this.productRepository.findOnlyProduct(id);
@@ -66,5 +72,12 @@ export class ProductService {
         message: 'Product deleted successfully',
       };
     }
+  }
+
+  async deleteProductSize(productsId: number, sizesId: number): Promise<any> {
+    const req = await this.productRepository.deleteProductSize(
+      productsId,
+      sizesId,
+    );
   }
 }

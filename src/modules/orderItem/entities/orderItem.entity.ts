@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OrderEntity } from './order.entity';
+import { AddressEntity } from 'src/modules/address/entities/address.entity';
 
 @Entity('OrderItems')
 export class OrderItemEntity {
@@ -51,6 +52,11 @@ export class OrderItemEntity {
     eager: true,
   })
   product: ProductEntity;
+
+  @ManyToOne(() => SizeEntity, (size) => size.orderItems, {
+    eager: true,
+  })
+  size: SizeEntity;
 
   // @ManyToOne(() => ProductEntity, (product) => product.carts)
   // product: ProductEntity;

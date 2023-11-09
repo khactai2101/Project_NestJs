@@ -9,6 +9,7 @@ import { OrderService } from './order.service';
 import { OrderRepository } from './order.repository';
 import { OrderController } from './order.controller';
 import { ProductEntity } from '../product/entities/product.entity';
+import { SizeEntity } from '../size/entities/size.entity';
 
 @Module({
   imports: [

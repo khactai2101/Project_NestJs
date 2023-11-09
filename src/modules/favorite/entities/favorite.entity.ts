@@ -44,6 +44,9 @@ export class FavoriteEntity {
 
   // @ManyToOne(() => SizeEntity, (size) => size.favorites)
   // size: SizeEntity;
-  @ManyToOne(() => SizeEntity, (size) => size.favorites)
+  @ManyToOne(() => SizeEntity, (size) => size.favorites, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   size: SizeEntity;
 }

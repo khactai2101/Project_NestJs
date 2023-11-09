@@ -24,7 +24,7 @@ export class UserRepository {
   async updateUser(id: number, data: IUser): Promise<any> {
     return await this.userRepository.update(id, data);
   }
-  // async updateStatus(id: number, body: IUser): Promise<any> {
-  //   return await this.userRepository.update(id, body);
-  // }
+  async updateStatus(id: number, body: IUser): Promise<any> {
+    return await this.userRepository.update(id, body);
+  }
 }

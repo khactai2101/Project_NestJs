@@ -37,10 +37,12 @@ export class AddressController {
     };
     return await this.addressService.createAddress(data);
   }
-  @Get('/')
+  @Get('/me')
   @UseGuards(CheckAuthenGuard)
-  async getAllAddress(): Promise<IAddress[]> {
-    return await this.addressService.getAllAddressService();
+  async getAllAddress(): Promise<any> {
+    const currentToken = this.sharedDataService.getCurrentToken();
+    const userId = currentToken.token.id;
+    return await this.addressService.getAllAddressService(userId);
   }
 
   @Put('/:id')

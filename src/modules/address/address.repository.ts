@@ -16,8 +16,10 @@ export class AddressRepository {
     await this.addressRepository.save(newAddress);
     return newAddress;
   }
-  async findAllAddress(): Promise<AddressEntity[]> {
-    return this.addressRepository.find();
+  async findAllAddress(userId: number): Promise<AddressEntity[]> {
+    return this.addressRepository.find({
+      where: { userId },
+    });
   }
 
   async updateAddress(id: number, data: IAddress): Promise<any> {
