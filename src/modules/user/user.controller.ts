@@ -61,8 +61,10 @@ export class UserController {
     return await this.userService.updateUserService(userId, body);
   }
 
-  // @Put('/:id')
-  // async updateStatusUser(@Param('id') id: number, @Body() body): Promise<any> {
-  //   return await this.userService.updateStatusService(id, body);
-  // }
+  @Put('updateStatus/:id')
+  @UseGuards(CheckAuthenGuard)
+  @UseGuards(CheckAuthorGuard)
+  async updateStatusUser(@Param('id') id: number, @Body() body): Promise<any> {
+    return await this.userService.updateStatusService(id, body);
+  }
 }

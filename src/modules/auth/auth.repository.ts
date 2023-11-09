@@ -60,4 +60,35 @@ export class AuthRepository {
     }
     return false;
   }
+
+  async loginGoogleRepository(req: any) {
+    console.log(req);
+
+    const existingUser = await this.userRepository.findOne({
+      where: { email: req.email },
+    });
+
+    if (!existingUser) {
+      return false;
+    }
+
+    const dataGenerateToken = {
+      id: existingUser.id,
+      fullName: existingUser.fullName,
+      email: existingUser.email,
+      avatar: existingUser.avatar,
+      status: existingUser.status,
+      roleId: existingUser.roleId,
+    };
+    const accessToken = this.generateToken.signJwt({
+      token: dataGenerateToken,
+    });
+
+    return {
+      success: true,
+      data: accessToken,
+      dataGenerateToken,
+    };
+    return false;
+  }
 }

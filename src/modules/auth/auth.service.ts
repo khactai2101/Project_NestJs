@@ -34,4 +34,8 @@ export class AuthService {
   async loginService(req: LoginDto) {
     return await this.authRepository.loginRepository(req);
   }
+
+  async loginGoogleService(req: any) {
+    return await this.authRepository.loginGoogleRepository(req.user);
+  }
 }

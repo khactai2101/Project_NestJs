@@ -7,6 +7,7 @@ import { CartEntity } from '../cart/entities/cart.entity';
 import { OrderEntity } from './entities/order.entity';
 import { IOrder } from './interface/orderItem.interface';
 import { ProductEntity } from '../product/entities/product.entity';
+import { log } from 'console';
 
 @Injectable()
 export class OrderRepository {
@@ -54,20 +55,23 @@ export class OrderRepository {
   }
 
   async findAllOrder(userId: number): Promise<any> {
-    return this.orderRepository.find({
+    const data = await this.orderRepository.find({
       where: { userId },
       relations: ['address', 'orderItems'],
     });
+
+    return data;
   }
+  // async findAllOrder(userId: number): Promise<any> {
+  //   return this.orderRepository.find({
+  //     where: { userId },
+  //     relations: ['address', 'orderItems'],
+  //   });
+  // }
   async findAllOrderByAdmin(): Promise<any> {
     return this.orderRepository.find();
   }
   async updateStatusOrder(id: number, data: IOrder): Promise<any> {
     return await this.orderRepository.update(id, data);
   }
-
-  // async deleteOrderItem(id: number): Promise<DeleteResult> {
-  //   const deleteOrderItem = await this.OrderItemRepository.delete(id);
-  //   return deleteOrderItem;
-  // }
 }

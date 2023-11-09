@@ -27,17 +27,17 @@ export class UserService {
     }
   }
 
-  // async updateStatusService(id: number, body: IUser): Promise<GlobalInterface> {
-  //   const response = await this.userRepository.updateStatus(id, body);
-  //   if (response.affected == 1) {
-  //     return {
-  //       success: true,
-  //       message: 'Change status successfully',
-  //     };
-  //   }
-  //   return {
-  //     success: false,
-  //     message: 'Id User not found',
-  //   };
-  // }
+  async updateStatusService(id: number, body: IUser): Promise<GlobalInterface> {
+    const response = await this.userRepository.updateStatus(id, body);
+    if (response.affected == 1) {
+      return {
+        success: true,
+        message: 'Change status successfully',
+      };
+    }
+    return {
+      success: false,
+      message: 'Id User not found',
+    };
+  }
 }

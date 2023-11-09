@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -24,8 +25,8 @@ require('dotenv').config();
 const initLink = process.env.initLink;
 
 @Controller(initLink + '/products')
-@UseGuards(CheckAuthenGuard)
-@UseGuards(CheckAuthorGuard)
+// @UseGuards(CheckAuthenGuard)
+// @UseGuards(CheckAuthorGuard)
 export class ProductController {
   constructor(
     public productService: ProductService,
@@ -58,8 +59,8 @@ export class ProductController {
     return await this.productService.createProductSize(data);
   }
   @Get('/')
-  async getAllProduct(): Promise<IProducts[]> {
-    return await this.productService.getAllProduct();
+  async getAllProduct(@Query() data): Promise<IProducts[]> {
+    return await this.productService.getAllProduct(data);
   }
   @Get('/:id')
   async getProductById(@Param() param): Promise<string | IProducts> {
@@ -95,5 +96,13 @@ export class ProductController {
   @Delete('/:id')
   async deleteProduct(@Param('id') id: number): Promise<GlobalInterface> {
     return await this.productService.deleteProduct(id);
+  }
+
+  @Delete('/productSize/:productsId/:sizesId')
+  async deleteProductSize(
+    @Param('productsId') productsId: number,
+    @Param('sizesId') sizesId: number,
+  ): Promise<any> {
+    return await this.productService.deleteProductSize(productsId, sizesId);
   }
 }

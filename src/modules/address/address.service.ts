@@ -23,8 +23,8 @@ export class AddressService {
       message: 'address created failed',
     };
   }
-  async getAllAddressService(): Promise<IAddress[]> {
-    return await this.addressRepository.findAllAddress();
+  async getAllAddressService(userId: number): Promise<any> {
+    return await this.addressRepository.findAllAddress(userId);
   }
 
   async updateAddressService(id: number, data: IAddress): Promise<IAddress> {

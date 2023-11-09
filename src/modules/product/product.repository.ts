@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, ILike, Repository } from 'typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { ProductDto, ProductStatusDto } from './dto/product.dto';
 import { ImageEntity } from '../image/entities/image.entity';
 import { IProducts } from './interface/product.interface';
 import { ProductSizeEntity } from './entities/productSize.entity';
+import { ISearch } from 'src/shared/interfaces/global.interface';
 
 @Injectable()
 export class ProductRepository {
@@ -36,13 +37,14 @@ export class ProductRepository {
     return await this.productSizeRepository.save(data);
   }
 
-  async findAllProduct(): Promise<IProducts[]> {
+  async findAllProduct(data: ISearch): Promise<any> {
     return this.productRepository.find({
+      where: data.data && { name: ILike(`%${data.data}%`) },
       relations: ['brand', 'category', 'images', 'size'],
     });
   }
   async findOnlyProduct(id: number): Promise<any> {
-    const product = await this.productRepository.find({
+    const product = await this.productRepository.findOne({
       where: { id: id },
       relations: ['brand', 'category', 'images', 'size'],
     });
@@ -64,5 +66,10 @@ export class ProductRepository {
     await this.imageRepository.delete({ productId: id });
     await this.productSizeRepository.delete({ productsId: id });
     return await this.productRepository.delete(id);
+  }
+
+  async deleteProductSize(productsId, sizesId): Promise<any> {
+    const options = { productsId: productsId, sizesId: sizesId };
+    await this.productSizeRepository.delete(options);
   }
 }

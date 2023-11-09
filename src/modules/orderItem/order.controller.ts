@@ -28,10 +28,16 @@ export class OrderController {
   ) {}
 
   @Post('/')
-  async createOrderItem(): Promise<any> {
+  async createOrderItem(@Body() data): Promise<any> {
     const currentToken = this.sharedDataService.getCurrentToken();
     const userId = currentToken.token.id;
-    return await this.orderService.createOrderItem(userId);
+    const req = {
+      addressId: data.addressId,
+      paymentId: data.paymentId,
+      userId,
+    };
+
+    return await this.orderService.createOrderItem(req);
   }
   @Get('/me')
   async getAllOrder(): Promise<any> {

@@ -16,10 +16,16 @@ export class ProductSizeEntity {
   @PrimaryColumn()
   sizesId: number;
 
-  @ManyToOne(() => ProductEntity, (product) => product.productSizes)
+  @ManyToOne(() => ProductEntity, (product) => product.productSizes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   products: ProductEntity;
 
-  @ManyToOne(() => SizeEntity, (size) => size.productSizes)
+  @ManyToOne(() => SizeEntity, (size) => size.productSizes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   sizes: SizeEntity;
 
   //   @ManyToOne(() => CategoryEntity, (category) => category.product)

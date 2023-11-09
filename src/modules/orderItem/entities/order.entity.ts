@@ -40,7 +40,9 @@ export class OrderEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updateAt: Date;
 
-  @ManyToOne(() => AddressEntity, (address) => address.orders)
+  @ManyToOne(() => AddressEntity, (address) => address.orders, {
+    eager: true,
+  })
   address: AddressEntity;
 
   @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order, {
