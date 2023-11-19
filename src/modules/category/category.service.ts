@@ -4,7 +4,10 @@ import { LoginDto } from '../auth/dto/login.dto';
 import { CategoryDto } from './dto/category.dto';
 import { CategoryEntity } from './entities/category.entity';
 import { log } from 'console';
-import { GlobalInterface } from 'src/shared/interfaces/global.interface';
+import {
+  GlobalInterface,
+  ISearch,
+} from 'src/shared/interfaces/global.interface';
 import { CategoryRepository } from './category.repository';
 
 @Injectable()
@@ -14,8 +17,8 @@ export class CategoryService {
     const newCategory = await this.categoryRepository.createCategory(data);
     return newCategory;
   }
-  async getAllCategoryService(): Promise<ICategory[]> {
-    return await this.categoryRepository.findAllCategory();
+  async getAllCategoryService(data: ISearch): Promise<ICategory[]> {
+    return await this.categoryRepository.findAllCategory(data);
   }
   async getCategoryById(id: number): Promise<any> {
     const Category = await this.categoryRepository.findOnlyCategory(id);

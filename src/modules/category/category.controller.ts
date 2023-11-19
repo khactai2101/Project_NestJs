@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -31,8 +32,8 @@ export class CategoryController {
     return await this.categoryService.createCategory(categoryData);
   }
   @Get('/')
-  async getAllCategory(): Promise<ICategory[]> {
-    return await this.categoryService.getAllCategoryService();
+  async getAllCategory(@Query() data): Promise<ICategory[]> {
+    return await this.categoryService.getAllCategoryService(data);
   }
 
   @Get('/:id')

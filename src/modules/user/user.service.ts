@@ -2,18 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { IUser } from './interface/user.interface';
 import { LoginDto } from '../auth/dto/login.dto';
-import { GlobalInterface } from 'src/shared/interfaces/global.interface';
+import {
+  GlobalInterface,
+  ISearch,
+} from 'src/shared/interfaces/global.interface';
 
 @Injectable()
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  async getAllUser(): Promise<IUser[]> {
-    return await this.userRepository.findAllUser();
+  async getAllUser(data: ISearch): Promise<IUser[]> {
+    return await this.userRepository.findAllUser(data);
   }
   async getOneUserService(id: number) {
-    console.log(id);
-
     return await this.userRepository.findOnlyUser(id);
   }
   async updateUserService(id: number, data: IUser): Promise<GlobalInterface> {
