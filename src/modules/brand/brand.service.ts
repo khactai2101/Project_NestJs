@@ -4,7 +4,10 @@ import { LoginDto } from '../auth/dto/login.dto';
 import { BrandDto } from './dto/brand.dto';
 import { BrandEntity } from './entities/brand.entity';
 import { BrandRepository } from './brand.repository';
-import { GlobalInterface } from 'src/shared/interfaces/global.interface';
+import {
+  GlobalInterface,
+  ISearch,
+} from 'src/shared/interfaces/global.interface';
 
 @Injectable()
 export class BrandService {
@@ -13,8 +16,8 @@ export class BrandService {
     const newBrand = await this.brandRepository.createBrand(data);
     return newBrand;
   }
-  async getAllBrandService(): Promise<IBrand[]> {
-    return await this.brandRepository.findAllBrand();
+  async getAllBrandService(data: ISearch): Promise<IBrand[]> {
+    return await this.brandRepository.findAllBrand(data);
   }
   async getBrandById(id: number): Promise<any> {
     const brand = await this.brandRepository.findOnlyBrand(id);

@@ -15,6 +15,7 @@ import { CheckAuthorGuard } from 'src/shared/guards/role.guard';
 import { SharedDataService } from 'src/shared/middlewares/shareData.service';
 import { OrderService } from './order.service';
 import { OrderItemDto } from './dto/orderItem.dto';
+import { log } from 'console';
 
 require('dotenv').config();
 const initLink = process.env.initLink;
@@ -29,6 +30,8 @@ export class OrderController {
 
   @Post('/')
   async createOrderItem(@Body() data): Promise<any> {
+    console.log(data);
+
     const currentToken = this.sharedDataService.getCurrentToken();
     const userId = currentToken.token.id;
     const req = {

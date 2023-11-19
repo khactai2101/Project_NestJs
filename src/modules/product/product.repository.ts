@@ -41,6 +41,9 @@ export class ProductRepository {
     return this.productRepository.find({
       where: data.data && { name: ILike(`%${data.data}%`) },
       relations: ['brand', 'category', 'images', 'size'],
+      order: {
+        id: 'DESC',
+      },
     });
   }
   async findOnlyProduct(id: number): Promise<any> {

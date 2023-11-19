@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, ILike, Repository } from 'typeorm';
 import { UserEntity } from '../auth/entities/auth.entity';
 import { IUser } from './interface/user.interface';
+import { ISearch } from 'src/shared/interfaces/global.interface';
 
 @Injectable()
 export class UserRepository {
@@ -11,8 +12,11 @@ export class UserRepository {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  async findAllUser(): Promise<UserEntity[]> {
-    return this.userRepository.find({ relations: ['role', 'addresses'] });
+  async findAllUser(data: ISearch): Promise<any> {
+    return this.userRepository.find({
+      where: data.data && { email: ILike(`%${data.data}%`) },
+      relations: ['role', 'addresses'],
+    });
   }
   async findOnlyUser(id: number): Promise<IUser> {
     return await this.userRepository.findOne({

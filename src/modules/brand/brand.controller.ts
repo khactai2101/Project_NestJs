@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -30,8 +31,8 @@ export class BrandController {
     return await this.brandService.createBrand(brandData);
   }
   @Get('/')
-  async getAllbrand(): Promise<IBrand[]> {
-    return await this.brandService.getAllBrandService();
+  async getAllbrand(@Query() data): Promise<IBrand[]> {
+    return await this.brandService.getAllBrandService(data);
   }
   @Get('/:id')
   async getbrandById(@Param('id') id: number): Promise<any> {

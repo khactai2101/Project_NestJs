@@ -58,18 +58,20 @@ export class OrderRepository {
     const data = await this.orderRepository.find({
       where: { userId },
       relations: ['address', 'orderItems'],
+      order: {
+        id: 'DESC',
+      },
     });
 
     return data;
   }
-  // async findAllOrder(userId: number): Promise<any> {
-  //   return this.orderRepository.find({
-  //     where: { userId },
-  //     relations: ['address', 'orderItems'],
-  //   });
-  // }
+
   async findAllOrderByAdmin(): Promise<any> {
-    return this.orderRepository.find();
+    return this.orderRepository.find({
+      order: {
+        id: 'DESC',
+      },
+    });
   }
   async updateStatusOrder(id: number, data: IOrder): Promise<any> {
     return await this.orderRepository.update(id, data);

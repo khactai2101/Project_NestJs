@@ -62,8 +62,6 @@ export class AuthRepository {
   }
 
   async loginGoogleRepository(req: any) {
-    console.log(req);
-
     const existingUser = await this.userRepository.findOne({
       where: { email: req.email },
     });

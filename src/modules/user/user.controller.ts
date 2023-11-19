@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Put,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -34,8 +35,8 @@ export class UserController {
   @Get('/')
   @UseGuards(CheckAuthenGuard)
   @UseGuards(CheckAuthorGuard)
-  async getAllUser(): Promise<IUser[]> {
-    return await this.userService.getAllUser();
+  async getAllUser(@Query() data): Promise<IUser[]> {
+    return await this.userService.getAllUser(data);
   }
   @Get('/me')
   @UseGuards(CheckAuthenGuard)
