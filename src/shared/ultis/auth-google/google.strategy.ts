@@ -13,7 +13,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       clientID:
         '838485498685-g3jg1bn671p3b78favi818ht6a7na7ee.apps.googleusercontent.com',
       clientSecret: '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',
-      callbackURL: 'http://localhost:9000/api/v1/auth/google/redirect',
+      callbackURL: 'https://nestjs-c3hh.onrender.com/api/v1/auth/google/redirect',
       scope: ['email', 'profile'],
     });
   }
