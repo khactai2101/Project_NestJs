@@ -8,7 +8,7 @@ dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'mariadb',
       host: process.env.DATABASE_HOST || 'localhost',
       port: +process.env.DATABASE_PORT,
       username: process.env.DATABASE_USERNAME,
